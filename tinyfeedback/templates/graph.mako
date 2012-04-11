@@ -1,3 +1,8 @@
+<%!
+    def none_to_null(text):
+        return "1"
+        #return "null" if text == "None" else text
+%>
 <html>
     <head>
         <link href='/static/css/style.css' type='text/css' rel='stylesheet' />
@@ -20,16 +25,20 @@
                 </form>
             % endfor
         % else:
-            Want this graph on your dasboard? ^ Click up there!
+            Want this graph on your dashboard? ^ Click up there!
         % endif
         <table class='graph'>
             <tr>
                 <td>
                 % for (graph_id, graph_name, graph_name_urlencoded, graph_type, graph_type_urlencoded, timescale, time_per_data_point, fields_urlencoded, line_names, data, current_time, length, max_value) in graph:
+                    % for i, d in enumerate(data):
+                        % if d is None:
+                            % data[i] = "null"
+                        % endif
+                    % endfor
                     <h3>${graph_name}</h3>
                     <script type='text/javascript+protovis'>
                         var line_names = ${line_names};
-                        var data = ${data};
                         var max = ${max_value};
                         var length = ${length};
                         var graph_type = '${graph_type}';

@@ -296,11 +296,11 @@ class Data(DatabaseObject):
         self.metric = metric
         self.last_updated = self._get_time_slot()
 
-        self._data_6h  = [0] * 360 # Every 1 min
-        self._data_36h = [0] * 432 # Every 5 min
-        self._data_1w  = [0] * 336 # Every 30 min
-        self._data_1m  = [0] * 360 # Every 2 hours
-        self._data_6m  = [0] * 360 # Every 12 hours
+        self._data_6h  = [None] * 360 # Every 1 min
+        self._data_36h = [None] * 432 # Every 5 min
+        self._data_1w  = [None] * 336 # Every 30 min
+        self._data_1m  = [None] * 360 # Every 2 hours
+        self._data_6m  = [None] * 360 # Every 12 hours
 
         self.data_6h = simplejson.dumps(self._data_6h)
         self.data_36h = simplejson.dumps(self._data_36h)
@@ -549,7 +549,7 @@ class Data(DatabaseObject):
                 if self.last_updated == time_slot:
                     self._data_6h[self.index_6h] = value
                 else:
-                    self._data_6h[self.index_6h] = 0
+                    self._data_6h[self.index_6h] = None
 
                 self.updates_since_6h_roll_up += 1
 
